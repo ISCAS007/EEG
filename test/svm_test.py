@@ -8,6 +8,8 @@ from sklearn.metrics import accuracy_score
 from sklearn import preprocessing
 from sklearn.cross_validation import train_test_split
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import AdaBoostClassifier,RandomForestClassifier
+from sklearn.linear_model import SGDClassifier
 
 data_path='/media/sdb/xiaobingdu/data_bmovie2.mat'
 #load dataset
@@ -18,7 +20,8 @@ print(data.shape)
 y_col=151
 x=data[:,:150]
 y=data[:,y_col]
-
+#x=x[y!=102,:]
+#y=y[y!=102]
 if y_col == 151:
     y[np.logical_or(y==103,y==104)]=102
     y[np.logical_or(y==106,y==107)]=105
@@ -58,8 +61,15 @@ x_test=scaler.transform(x_test)
 print(x_train.shape)
 print(y_train.shape)
 
-clf=svm.SVC(C=1.0)
+
+#clf=SGDClassifier()
+clf=svm.SVC(C=75,decision_function_shape='ovr')
 #clf=DecisionTreeClassifier(max_depth=15)
+#clf=RandomForestClassifier(n_estimators=100,max_depth=10)
+#clf = AdaBoostClassifier(
+#    DecisionTreeClassifier(max_depth=2),
+#    n_estimators=600,
+#    learning_rate=1)
 clf.fit(x_train,y_train)
 train_acc=clf.score(x_train,y_train)
 test_acc=clf.score(x_test,y_test)
