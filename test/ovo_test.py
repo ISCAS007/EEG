@@ -75,7 +75,7 @@ c.columns=np.unique(y_raw)
 c.index=np.unique(y_raw)
 d=a.from_dict(np.round(test_results,2))
 d.columns=np.unique(y_raw)
-d.index=np.unicode(y_raw)
+d.index=np.unique(y_raw)
 
 print('train results'+'*'*30)
 print(c)
